@@ -1,0 +1,31 @@
+package dataprocesser;
+//
+//import java.io.File;
+//
+//public class Executive {
+//	public static void main(String[] args){
+//		//Unzip zip=new Unzip();
+//		LoggerJava.configLogger();
+//		String source = "/Users/arpitmshah/Documents/Temp/arpi.zip";
+//		File unzippedFolder=new File(Unzip.unzip(source));
+//		for(final File file: unzippedFolder.listFiles()){
+//			if(!file.getName().contains("aggregated"))
+//			System.out.println(file.getAbsolutePath());
+//		}
+//	}
+//}
+import java.sql.*;  
+public class Executive { 
+public static void main(String args[]){  
+try{  
+Connection con=DriverManager.getConnection(  
+"jdbc:mysql://localhost:3306/sonoo","root","Zaq12wsx");  
+//here sonoo is database name, root is username and password  
+Statement stmt=con.createStatement();  
+ResultSet rs=stmt.executeQuery("select * from emp");  
+while(rs.next())  
+System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));  
+con.close();  
+}catch(Exception e){ System.out.println(e);}  
+}  
+}  

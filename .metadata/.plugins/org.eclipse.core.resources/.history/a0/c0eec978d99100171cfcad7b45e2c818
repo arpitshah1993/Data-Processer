@@ -1,0 +1,116 @@
+package dataprocesser;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class DataReader {
+	Connection con;
+	final String url="jdbc:mysql://localhost:3306/";
+	final String dbName="stateData";
+	final String USERNAME="root";
+	final String PWD="Zaq12wsx";
+
+
+	public void createDatabaseAndTable(){
+		//deleting database if already exist
+		try{
+			Statement stmt=con.createStatement();  
+			int rs=stmt.executeUpdate("drop database "+dbName);
+		}
+		catch (SQLException e) {
+			LoggerJava.log(e.getMessage());
+		}
+
+		try {
+			{
+				//creating database
+				Statement stmt=con.createStatement();  
+				int rs=stmt.executeUpdate("create database "+dbName);
+				//updating connection to database
+				con=DriverManager.getConnection(url+dbName,USERNAME,PWD);
+			}
+			//creating table
+			Statement stmt = con.createStatement();
+			String sql = "CREATE TABLE table " +
+					"(Id INTEGER not NULL AUTO_INCREMENT, " +
+					" YEAR VARCHAR(5), " + 
+					" MONTH VARCHAR(2), " + 
+					" SPNAME VARCHAR(100), " + 
+					" ADDR VARCHAR(200), " + 
+					" STATIONNAME VARCHAR(100), " + 
+					" UNITS INTEGER, " + 
+					" QUANTITY VARCHAR(70), " + 
+					" DAY VARCHAR(2), " + 
+					" HOUR VARCHAR(2), " + 
+					" PRIMARY KEY ( id ))"; 
+			stmt.executeUpdate(sql);
+		}
+		catch (SQLException e) {
+			LoggerJava.log(e.getMessage());
+		}
+
+	}
+
+	public void doIndexing()
+		try{
+			Statement stmt = con.createStatement();
+			String sql = "CREATE INDEX idx " +
+					" ON table(STATIONNAME)"; 
+			stmt.executeUpdate(sql);
+		}
+		catch (SQLException e) {
+			LoggerJava.log(e.getMessage());
+		}
+	}
+	
+	public void insertData(String year,String month,String SPName, String addr,String stationName, String units, String quantity, String day, String hour){
+		try{
+			Statement stmt = con.createStatement();
+			String sql = "INSERT INTO table " +
+					" VALUES ("+ year+","+month+","+SPName+","+addr+","+stationName+","+units+","+quantity+","+day+","+hour+")";
+					
+			stmt.executeUpdate(sql);
+		}
+		catch (SQLException e) {
+			LoggerJava.log(e.getMessage());
+		}
+	}
+	
+	public DataReader(){
+		try {
+			con=DriverManager.getConnection(url,"root","Zaq12wsx");
+			createDatabaseAndTable();
+		} 
+		catch (SQLException e) {
+			LoggerJava.log(e.getMessage());
+		}
+	}
+/*
+ public DataReader(){
+		try {
+			con=DriverManager.getConnection(url,"root","Zaq12wsx");
+			createDatabaseAndTable();
+			//			Statement stmt1=con.createStatement();  
+			//			int rs1=stmt1.executeUpdate("create database "+dbName);
+			//			con=DriverManager.getConnection(url+dbName,USERNAME,PWD);
+			//			Statement stmt = con.createStatement();
+			//			String sql = "CREATE TABLE table " +
+			//				             "(id INTEGER not NULL, " +
+			//				             " first VARCHAR(255), " + 
+			//				             " last VARCHAR(255), " + 
+			//				             " age INTEGER, " + 
+			//				             " PRIMARY KEY ( id ))"; 
+			//			stmt.executeUpdate(sql);
+		} 
+		catch (SQLException e) {
+			LoggerJava.log(e.getMessage());
+		}
+	}
+
+ */
+	//	public boolean setUpdatabase(){
+	//		
+	//	}
+}

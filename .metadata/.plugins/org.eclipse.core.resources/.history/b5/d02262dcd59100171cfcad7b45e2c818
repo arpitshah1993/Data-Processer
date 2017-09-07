@@ -1,0 +1,37 @@
+package dataprocesser;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class DataReader {
+	Connection con;
+	final String url="jdbc:mysql://localhost:3306/";
+	final String dbName="stateData";
+	final String USERNAME="root";
+	final String PWD="Zaq12wsx";
+	public DataReader(){
+		try {
+			con=DriverManager.getConnection(url,"root","Zaq12wsx");
+			Statement stmt1=con.createStatement();  
+			int rs1=stmt1.executeUpdate("create database "+dbName);
+			con=DriverManager.getConnection(url+dbName,USERNAME,PWD);
+			Statement stmt = con.createStatement();
+			String sql = "CREATE TABLE table " +
+				             "(id INTEGER not NULL, " +
+				             " first VARCHAR(255), " + 
+				             " last VARCHAR(255), " + 
+				             " age INTEGER, " + 
+				             " PRIMARY KEY ( id ))"; 
+			stmt.executeUpdate(sql);
+		} 
+		catch (SQLException e) {
+			LoggerJava.log(e.getMessage());
+		}
+	}
+	
+//	public boolean setUpdatabase(){
+//		
+//	}
+}

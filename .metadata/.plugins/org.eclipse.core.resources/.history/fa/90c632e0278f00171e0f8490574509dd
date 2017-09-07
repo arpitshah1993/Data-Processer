@@ -1,0 +1,28 @@
+package dataprocesser;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class DataReader {
+	Connection con;
+	String url,dbName;
+	public DataReader(){
+		try {
+			url="jdbc:mysql://localhost:3306/";
+			dbName="stateData";
+			con=DriverManager.getConnection(url,"root","Zaq12wsx");
+			Statement stmt1=con.createStatement();  
+			int rs1=stmt1.executeUpdate("create database "+dbName);
+			con=DriverManager.getConnection(url+dbName,"root","Zaq12wsx");  
+		} 
+		catch (SQLException e) {
+			LoggerJava.log(e.getMessage());
+		}
+	}
+	
+	public boolean setUpdatabase(){
+		
+	}
+}

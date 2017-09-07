@@ -1,0 +1,13 @@
+package dataprocesser;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class LoggerJava {
+	private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+    public static void log(String message) {
+    	LOGGER.setLevel(Level.INFO);
+        LOGGER.info(message);
+    }
+}

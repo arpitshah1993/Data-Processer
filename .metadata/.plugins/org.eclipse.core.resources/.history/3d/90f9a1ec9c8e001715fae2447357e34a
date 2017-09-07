@@ -1,0 +1,25 @@
+package dataprocesser;
+
+import net.lingala.zip4j.exception.ZipException;
+
+import java.io.File;
+
+import net.lingala.zip4j.core.ZipFile;
+
+public class Unzip {
+	public static String unzip(String source){
+	   // String source = "/Users/arpitshah/Documents/Temp/arpi.zip";
+	    String destination = "./Temp";
+	    new File(destination).mkdir();
+	    try {
+	         ZipFile zipFile = new ZipFile(source);
+	         if (zipFile.isEncrypted()) {
+	        	 LoggerJava.log("File: "+source+" is encrypted.");
+	         }
+	         zipFile.extractAll(destination);
+	    } catch (ZipException e) {
+	        LoggerJava.log(e.getMessage());
+	    }
+	    return destination;
+	}
+}

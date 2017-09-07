@@ -1,0 +1,16 @@
+package dataprocesser;
+
+import java.io.File;
+
+public class Executive {
+	public static void main(String[] args){
+		//Unzip zip=new Unzip();
+		LoggerJava.configLogger();
+		String source = "/Users/arpitmshah/Documents/Temp/arpi.zip";
+		File unzippedFolder=new File(Unzip.unzip(source));
+		for(final File file: unzippedFolder.listFiles()){
+			if(!file.getName().contains("aggregated"))
+			System.out.println(file.getAbsolutePath());
+		}
+	}
+}
